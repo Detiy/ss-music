@@ -1,0 +1,19 @@
+.el-icon-arrow-left{
+    position: fixed;
+    top:20px;
+    left:20px;
+  }
+.el-header {
+  height:150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: PingFang SC;
+  font-size: 20px;
+}
+.el-container{
+    /* margin-bottom:40px;s */
+}
+li{
+  list-style: none;
+}

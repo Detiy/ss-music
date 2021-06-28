@@ -1,0 +1,282 @@
+{
+  "id": "2240129",
+  "name": "music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "21643422",
+      "name": "棒棒糖",
+      "font_class": "bangbangtang",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "21643423",
+      "name": "果汁",
+      "font_class": "guozhi",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "21643424",
+      "name": "杯子蛋糕",
+      "font_class": "beizidangao",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "21643425",
+      "name": "爆米花",
+      "font_class": "baomihua",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "21643426",
+      "name": "布丁",
+      "font_class": "buding",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "21643427",
+      "name": "茶",
+      "font_class": "cha",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "21643428",
+      "name": "汉堡",
+      "font_class": "hanbao",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "21643429",
+      "name": "鸡腿",
+      "font_class": "jitui",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "21643430",
+      "name": "蛋糕 ",
+      "font_class": "dangao",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "21643431",
+      "name": "开心果",
+      "font_class": "kaixinguo",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "21643432",
+      "name": "咖啡",
+      "font_class": "kafei",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "21643433",
+      "name": "蓝莓",
+      "font_class": "lanmei",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "21643434",
+      "name": "柠檬",
+      "font_class": "ningmeng",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "21643435",
+      "name": "牛排",
+      "font_class": "niupai",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "9225285",
+      "name": "排行榜",
+      "font_class": "paihangbang1",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "6683142",
+      "name": "曲库-音乐电台",
+      "font_class": "songbook_musicradio",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
+      "icon_id": "9132000",
+      "name": "排行榜",
+      "font_class": "paihangbang",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "9495864",
+      "name": "音乐风格36cccccc",
+      "font_class": "yinlefenggecccccc",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "17541059",
+      "name": "喜欢",
+      "font_class": "xihuan",
+      "unicode": "edec",
+      "unicode_decimal": 60908
+    },
+    {
+      "icon_id": "156341",
+      "name": "下载歌曲",
+      "font_class": "xiazaigequ",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "3165059",
+      "name": "下载",
+      "font_class": "xiazai-",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "4667171",
+      "name": "听歌识曲",
+      "font_class": "tinggeshiqu",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "4803078",
+      "name": "我喜欢",
+      "font_class": "woxihuan",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "6370797",
+      "name": "本地歌曲",
+      "font_class": "bendigequ",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "6995615",
+      "name": "最近播放",
+      "font_class": "zuijinbofang",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "13608538",
+      "name": "音乐",
+      "font_class": "yinle1",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "1977010",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "688097",
+      "name": "上一首 上一个",
+      "font_class": "shangyishoushangyige",
+      "unicode": "e78a",
+      "unicode_decimal": 59274
+    },
+    {
+      "icon_id": "688128",
+      "name": "下一个 下一首",
+      "font_class": "xiayigexiayishou",
+      "unicode": "e7a5",
+      "unicode_decimal": 59301
+    },
+    {
+      "icon_id": "1488892",
+      "name": "播放",
+      "font_class": "bofang",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "1488899",
+      "name": "列表循环",
+      "font_class": "liebiaoxunhuan",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "1793595",
+      "name": "菜单",
+      "font_class": "caidan",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "2767709",
+      "name": "单曲循环",
+      "font_class": "icon-",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "7165726",
+      "name": "fen_xiang",
+      "font_class": "fen_xiang",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "7675158",
+      "name": "前进",
+      "font_class": "qianjin",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "7872836",
+      "name": "开始",
+      "font_class": "kaishi",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "9138966",
+      "name": "音乐",
+      "font_class": "yinle",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "14310217",
+      "name": "返回",
+      "font_class": "fanhui",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "14420971",
+      "name": "前进",
+      "font_class": "qianjin1",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    }
+  ]
+}
