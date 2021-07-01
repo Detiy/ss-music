@@ -172,4 +172,7 @@ p{
   }
 }
 }
+.el-main{
+  margin-bottom: 30px;
+}
 </style>

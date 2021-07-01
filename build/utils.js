@@ -22,16 +22,37 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  // const postcssLoader = {
+  //   loader: 'postcss-loader',
+  //   options: {
+  //     sourceMap: options.sourceMap
+  //   }
+  // }
   const postcssLoader = {
     loader: 'postcss-loader',
     options: {
-      sourceMap: options.sourceMap
+     sourceMap: options.sourceMap,
+     plugins: [
+      require('postcss-pxtorem')({
+       'rootValue': 32,
+       propList: ['*']
+      })
+     ]
+   }
+  }
+  var px2remLoader = {
+    loader: 'px2rem-loader',
+    options: {
+      remUnit: 20, // 40px = 1rem
+            remPrecision:8  // rem的小数点后位数
     }
   }
 
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+    // const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+  const loaders = [cssLoader, px2remLoader];
+
 
     if (loader) {
       loaders.push({

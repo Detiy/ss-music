@@ -235,12 +235,14 @@ export default {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  font-size: 16px;
+
   .titRadio {
     width: 20%;
-    height: 50px;
+    height: 30px;
     background: rgb(213, 233, 212);
     margin: 5px;
-    line-height: 50px;
+    line-height: 30px;
     text-align: center;
     border-radius: 10px;
   }
@@ -249,14 +251,15 @@ export default {
   }
 }
 .radioList {
-  margin-top: 150px;
+  margin-top: 90px;
+  font-size: 16px;
 
   img {
-    height: 150px;
-    width: 150px;
+    height: 120px;
+    width: 120px;
   }
   .fuhao {
-    margin-top: 110px;
+    margin-top: 90px;
     margin-left: -50px;
     font-size: 30px;
     color: #fff;
@@ -272,7 +275,7 @@ export default {
     .radioSonTit {
       display: flex;
       flex-direction: column;
-      height: 150px;
+      height: 120px;
       justify-content: space-between;
       margin-left: 10px;
       span:nth-child(2) {

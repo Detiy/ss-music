@@ -76,6 +76,10 @@ export default {
     getComment(params){
       return httpGet('/comment',params)
     },
+    //删除评论
+    delComment(params){
+      return httpGet('/comment/del',params)
+    },
     //用户创建的歌单
     getSongList(params){
       return httpGet('/songlist',params)

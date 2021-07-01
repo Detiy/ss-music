@@ -1,5 +1,5 @@
 <template>
-  <div class="play">
+  <div class="play" :style="{ background: activeColor }">
     <el-container class="_container">
       <i
         class="el-icon-arrow-left"
@@ -7,21 +7,41 @@
         style="color: #fff; font-size: 30px"
       ></i>
     </el-container>
-    <Scroll class="lyric-wrapper" ref="lyricList">
-      <div class="lyric">
-        <li
-          v-for="(line, index) in lyric.lines"
-          ref="lyricLine"
-          :class="{ current: currentLineNum === index }"
-          class="text"
-          :key="index"
-        >
-          {{ line.txt }}
-        </li>
+    <div class="lyric-wrapper" ref="lyricList" @click="hideCard">
+      <div class="rotateCircle" v-show="!flag" @click="showLyric">
+        <div class="title">{{ currentLyricTitle }}</div>
+        <img
+          :src="this.$route.params.logo ? this.$route.params.logo : logo"
+          :class="[circleImgFlag ? 'circleImg' : 'noCircleImg']"
+        />
       </div>
-    </Scroll>
+      <!-- <div>{{ currentTime }}</div> -->
+      <div class="lyric" v-show="flag" @click="hideLyric">
+        <ul :style="{ transform: trans }">
+          <li
+            v-for="(line, index) in lyric.lines"
+            :class="{
+              current:
+                minArr[index] <= currentTime && currentTime < minArr[index + 1],
+            }"
+            class="text"
+            :key="index"
+            ref="lyricLine"
+            :data-time="line.time"
+            :data-index="index"
+          >
+            {{ line.txt }}
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="audioBtn">
-      <audio ref="audioMedia" :src="this.$route.params.audiourl"></audio>
+      <audio
+        ref="audioMedia"
+        :src="this.$route.params.audiourl"
+        id="audioMedia"
+        @timeupdate="updateTime"
+      ></audio>
       <div class="action_btn">
         <div
           class="iconfont icon-icon-"
@@ -34,75 +54,139 @@
           @click="liebiao"
         ></div>
         <div class="iconfont icon-shangyishoushangyige"></div>
-        <div class="middle">
-          <div
-            class="iconfont icon-bofang"
-            v-show="audioFlag"
-            @click="pauseAudio()"
-          ></div>
-          <div
-            class="iconfont icon-kaishi"
-            v-show="!audioFlag"
-            @click="playAudio()"
-          ></div>
-        </div>
+        <div
+          class="iconfont icon-bofang"
+          v-show="audioFlag"
+          @click="pauseAudio()"
+        ></div>
+        <div
+          class="iconfont icon-kaishi"
+          v-show="!audioFlag"
+          @click="playAudio()"
+        ></div>
         <div class="iconfont icon-xiayigexiayishou"></div>
-        <div class="iconfont icon-fen_xiang"></div>
+        <div class="iconfont icon-caidan" @click="showCard"></div>
       </div>
     </div>
+
+    <el-card
+      :body-style="{ padding: '10px', display: 'flex' }"
+      shadow="hover"
+      class="playCard"
+      v-show="cardFlag"
+    >
+      <el-row>
+        <el-col
+          v-for="item in commentList2"
+          :key="item.time"
+          style="display: flex; margin: 10px 0"
+        >
+          <img
+            :src="item.avatarurl"
+            class="image"
+            style="height: 50px; width: 50px; border-radius: 50%"
+          />
+          <div style="margin-left: 20px; text-align: left">
+            <div>
+              <img
+                :src="item.vipicon"
+                style="height: 20px; width: 20px"
+                v-show="item.vipicon"
+              /><span class="nick" style="color: red; font-size: 12px"
+                >{{ item.nick }}:
+              </span>
+              <p
+                style="
+                  color: #c6c6c6;
+                  font-size: 13px;
+                  margin-top: 5px;
+                  width: 230px;
+                "
+              >
+                {{ item.rootcommentcontent }}
+              </p>
+            </div>
+          </div>
+        </el-col>
+        <div
+          style="
+            font-size: 25px;
+            color: #fff;
+            opacity: 0.7;
+            position: fixed;
+            right: 20px;
+            top: 0px;
+          "
+          @click="hideCard"
+        >
+          x
+        </div>
+      </el-row>
+    </el-card>
   </div>
 </template>
 <script type="text/javascript">
 import Lyric from "lyric-parser";
-import Scroll from "./scroll.vue";
+import logo from "../../assets/image/waisheng.jpeg";
+// import Scroll from "./scroll.vue";
 export default {
   data() {
     return {
       active: "",
       lyric: "",
-      currentLyric: "",
+      currentLyricTitle: "",
       audioFlag: true,
       danquFlag: false,
       audioMedia: "",
-      currentLineNum: 0,
+      flag: false,
+      circleImgFlag: true,
+      activeColor: "linear-gradient(#dbdfcc, #5f5f56)",
+      cardFlag: false,
+      commentList2: [],
+      currentTime: 0,
+      minArr: [],
+      trans: "",
+      ind: 0,
+      logo,
     };
   },
-  components: {
-    Scroll,
-  },
   created() {
-    this.getLyric();
+    this.$http
+      .getSongsLyric({ songmid: this.$route.params.songmid })
+      .then((res) => {
+        this.lyric = new Lyric(res.data.lyric);
+        this.currentLyricTitle = this.lyric.lines[0].txt;
+      });
+    this.$http
+      .getComment({ id: this.$route.params.songid, bizType: 1 })
+      .then((res) => {
+        this.commentList2 = res.data.comment.commentlist;
+      });
   },
   mounted() {
     this.audioMedia = this.$refs.audioMedia; //获取所有audio对象
     this.audioMedia.autoplay = true;
   },
-  // computed() {
-  //   if (this.audioMedia.ended == true) {
-  //     this.audioMedia.pause();
-  //   }
-  // },
+  beforeUpdate() {
+    this.$refs.lyricLine.map((v) => {
+        let num1 = parseInt(v.dataset.time / 1000);
+        this.minArr.push(num1);
+      });
+  },
   methods: {
     back() {
       this.$router.go(-1);
     },
-    getLyric() {
-      this.$http
-        .getSongsLyric({ songmid: this.$route.params.songmid })
-        .then((res) => {
-          this.lyric = new Lyric(res.data.lyric, this.handleLyric);
-          // console.log(this.lyric);
-        });
-    },
     playAudio() {
       this.audioFlag = true;
       this.audioMedia.play();
+      this.circleImgFlag = true;
+      
     },
     pauseAudio() {
-      let audioMedia = this.$refs.audioMedia; //获取所有audio对象
       this.audioFlag = false;
-      audioMedia.pause();
-      console.log(this.audioFlag);
+      this.audioMedia.pause();
+      this.circleImgFlag = false;
     },
     danqu() {
       this.danquFlag = false;
@@ -111,30 +195,53 @@ export default {
     liebiao() {
       this.danquFlag = true;
     },
-    handleLyric({lineNum}) {
-      this.currentLineNum = lineNum;
-      // 若当前行大于5,开始滚动,以保歌词显示于中间位置
-      if (lineNum > 5) {
-        let lineEl = this.$refs.lyricLine[lineNum - 5];
-        // 结合better-scroll，滚动歌词
-        this.$refs.lyricList.scrollToElement(lineEl, 1000);
-      } else {
-        this.$refs.lyricList.scrollToElement(0, 0, 1000);
+    showLyric() {
+      if (this.cardFlag == true) return;
+      this.flag = true;
+      this.activeColor = "linear-gradient(#dbdfcc, #e6c50c)";
+    },
+    hideLyric() {
+      this.flag = false;
+      this.activeColor = "linear-gradient(#dbdfcc, #5f5f56)";
+    },
+    showCard() {
+      this.cardFlag = true;
+    },
+    hideCard() {
+      this.cardFlag = false;
+    },
+    updateTime(e) {
+      this.currentTime = parseInt(e.target.currentTime);
+      this.$nextTick(() => {
+        for (let i = 0; i < this.$refs.lyricLine.length; i++) {
+          if (
+            this.$refs.lyricLine[i].getAttribute("class").includes("current")
+          ) {
+            this.ind = this.$refs.lyricLine[i].dataset.index;
+            let instance = parseInt(-this.ind * 1.5);
+            this.trans = `translateY(${instance}rem)`;
+          }
+        }
+      });
+
+      if (this.$refs.audioMedia.ended == true) {
+        this.trans = `translateY(0px)`;
       }
     },
   },
+  // watch:{
+  //   ind(n){
+  //     this.ind = n;
+  //     this.$refs.lyricLine.scrollTop = 30 * n;
+  //   }
+  // }
 };
 </script>
 <style lang="less">
 .play {
   height: 100%;
   width: 100%;
-  background: url("../../assets/image/songBg.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-._container {
-  background: #85a58e;
+  font-size: 14px;
 }
 .active {
   width: 100%;
@@ -144,25 +251,57 @@ export default {
 }
 .lyric {
   margin-top: 50px;
-  height: 550px;
+  height: 500px;
   width: 100%;
   text-align: center;
   overflow: scroll;
+  color: #fff;
   .text {
     opacity: 0.7;
+    height: 30px;
+    line-height: 30px;
   }
   .current {
-    color: #fff;
+    color: rgb(105, 18, 105);
+  }
+}
+.rotateCircle {
+  margin-top: 50px;
+  height: 550px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .title {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: rgb(105, 18, 105);
+    width: 90%;
+    display: flex;
+    justify-content: center;
+  }
+  img {
+    width: 50%;
+    border-radius: 50%;
+  }
+  .circleImg {
+    animation: rotateCircle 10s linear infinite;
   }
 }
 .audioBtn {
   width: 90%;
   height: 70px;
-  border-top: 1px solid #333;
+  border-top: 1px solid rgb(192, 194, 170);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 40px auto;
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   .action_btn {
     width: 300px;
     display: flex;
@@ -170,19 +309,37 @@ export default {
     align-items: center;
     margin: 0 auto;
     color: #fff;
-    opacity: 0.5;
-    .icon-bofang {
-      font-size: 25px;
-    }
-    .icon-icon- {
-      font-size: 25px;
-    }
-    .icon-fen_xiang {
-      font-size: 25px;
-    }
+    // opacity: 0.5;
+
+    .icon-bofang,
+    .icon-icon-,
+    .icon-caidan,
     .icon-liebiaoxunhuan {
       font-size: 25px;
     }
+  }
+}
+.playCard {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 500px;
+  animation: rise 0.3s linear forwards;
+  overflow-y: scroll;
+  background: #333;
+  opacity: 0.7;
+}
+@keyframes rotateCircle {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rise {
+  from {
+    transform: translateY(300px);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 </style>

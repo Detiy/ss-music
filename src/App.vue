@@ -32,7 +32,6 @@ body {
   top: 0;
   bottom: 0;
   margin: auto;
-  max-width: 500px;
   color: #2c3e50;
   height: 100%;
   width: 100%;

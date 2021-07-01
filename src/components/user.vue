@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <i class="el-icon-arrow-left" @click="back"></i>
-      <el-header> susuMusic </el-header>
+      <el-header> Music </el-header>
     </el-container>
     <div class="pic"></div>
     <div class="head">

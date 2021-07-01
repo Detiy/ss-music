@@ -3,14 +3,14 @@
     <el-container class="_container">
       <i class="el-icon-arrow-left" @click="back"></i>
       <el-header>
-        susuMusic
+        Music
       </el-header>
     </el-container>
     <ul class="list">
       <li v-for="item in mvList" :key="item.id" @click="toMvUrl(item.vid)">
         <div><i class="iconfont icon-zuijinbofang"></i></div>
         <div>
-          <p>{{ item.singers[0].name }}</p>
+          <p style="font-size:16px;color:#c6c6c6">{{ item.singers[0].name }}</p>
           <br>
           <p style="font-size:12px;color:#c6c6c6">{{ item.singers[0].mid }}</p>
         </div>
@@ -52,9 +52,9 @@ export default {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  ._container{
-    background:#333;
-    color:#fff;
+  ._container,.el-icon-arrow-left{
+    // background:#333;
+    color:#333;
   }
   .el-container {
     margin-bottom: 0;
@@ -65,7 +65,7 @@ export default {
     margin-bottom: 70px;
     li {
       display: block;
-      height: 100px;
+      height: 80px;
       width: 100%;
       margin-top: 10px;
       display: flex;

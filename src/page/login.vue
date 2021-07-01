@@ -3,7 +3,7 @@
     <el-container class="_container">
       <el-header>
         <i class="el-icon-arrow-left" @click="back"></i>
-        <span>susuMusic</span>
+        <span>Music</span>
       </el-header>
     </el-container>
     <el-container class="loginBox">
@@ -115,7 +115,7 @@ i {
   font-size: 0.5rem;
 }
 .loginBox {
-//   height: 100%;
+  height: 100%;
   width: 100%;
   border-radius: 3px;
   position: absolute;
