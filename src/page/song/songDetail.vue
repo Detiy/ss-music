@@ -9,7 +9,7 @@
         v-for="(item, index) in songs"
         :key="item.id"
         class="songDetailList"
-        @click="play(item.songmid, item.songid)"
+        @click="play(item.songmid, item.songid, songs,index)"
       >
         <div style="width: 200px; text-align: left;display:flex;margin-left:10px;align-items:center;">
           <div class="fu fu1">
@@ -57,7 +57,7 @@ export default {
     back() {
       this.$router.go(-1);
     },
-    play(songmid, songid) {
+    play(songmid, songid, songs,index) {
       this.$http.getSongsPlay({ id: songmid }).then((res) => {
         this.$router.push({
           name: "play",
@@ -66,6 +66,8 @@ export default {
             audiourl: res.data[songmid],
             logo: this.logo,
             songid: songid,
+            songs: songs,
+            indexNum:index
           },
         });
       });

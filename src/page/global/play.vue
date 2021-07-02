@@ -38,7 +38,7 @@
     <div class="audioBtn">
       <audio
         ref="audioMedia"
-        :src="this.$route.params.audiourl"
+        :src="playUrl"
         id="audioMedia"
         @timeupdate="updateTime"
       ></audio>
@@ -53,7 +53,7 @@
           v-show="!danquFlag"
           @click="liebiao"
         ></div>
-        <div class="iconfont icon-shangyishoushangyige"></div>
+        <div class="iconfont icon-shangyishoushangyige" @click="pre"></div>
         <div
           class="iconfont icon-bofang"
           v-show="audioFlag"
@@ -64,7 +64,7 @@
           v-show="!audioFlag"
           @click="playAudio()"
         ></div>
-        <div class="iconfont icon-xiayigexiayishou"></div>
+        <div class="iconfont icon-xiayigexiayishou" @click="next"></div>
         <div class="iconfont icon-caidan" @click="showCard"></div>
       </div>
     </div>
@@ -148,9 +148,15 @@ export default {
       trans: "",
       ind: 0,
       logo,
+      playSongs: [],
+      playIndexNum: 0,
+      playUrl:'',
     };
   },
   created() {
+    this.playSongs = this.$route.params.songs;
+    this.playIndexNum = this.$route.params.indexNum;
+    this.playUrl = this.$route.params.audiourl;
     this.$http
       .getSongsLyric({ songmid: this.$route.params.songmid })
       .then((res) => {
@@ -166,12 +172,13 @@ export default {
   mounted() {
     this.audioMedia = this.$refs.audioMedia; //获取所有audio对象
     this.audioMedia.autoplay = true;
+    
   },
   beforeUpdate() {
     this.$refs.lyricLine.map((v) => {
-        let num1 = parseInt(v.dataset.time / 1000);
-        this.minArr.push(num1);
-      });
+      let num1 = parseInt(v.dataset.time / 1000);
+      this.minArr.push(num1);
+    });
   },
   methods: {
     back() {
@@ -181,7 +188,6 @@ export default {
       this.audioFlag = true;
       this.audioMedia.play();
       this.circleImgFlag = true;
-      
     },
     pauseAudio() {
       this.audioFlag = false;
@@ -223,18 +229,52 @@ export default {
           }
         }
       });
-
       if (this.$refs.audioMedia.ended == true) {
         this.trans = `translateY(0px)`;
       }
     },
+    pre() {
+      if(this.playIndexNum == 0) return;
+      this.playIndexNum = this.playIndexNum -1;
+      this.$refs.audioMedia.load();
+      this.trans = `translateY(0px)`;
+      this.$http.getSongsPlay({ id: this.playSongs[this.playIndexNum - 1].songmid  }).then((res)=> {
+       this.playUrl = res.data[this.playSongs[this.playIndexNum - 1].songmid]
+      });
+      this.$http
+        .getSongsLyric({ songmid: this.playSongs[this.playIndexNum - 1].songmid })
+        .then((res) => {
+          this.lyric = new Lyric(res.data.lyric);
+          this.currentLyricTitle = this.lyric.lines[0].txt;
+        });
+      this.$http
+        .getComment({ id: this.playSongs[this.playIndexNum - 1].songid, bizType: 1 })
+        .then((res) => {
+          this.commentList2 = res.data.comment.commentlist;
+        });
+    },
+    next() {
+      if(this.playIndexNum == this.playSongs.length) return;
+      this.playIndexNum  = this.playIndexNum + 1
+      this.$refs.audioMedia.load();
+      this.trans = `translateY(0px)`;
+      this.$http.getSongsPlay({ id: this.playSongs[this.playIndexNum + 1].songmid  }).then((res)=> {
+       this.playUrl = res.data[this.playSongs[this.playIndexNum + 1].songmid]
+      });
+      this.$http
+        .getSongsLyric({ songmid: this.playSongs[this.playIndexNum + 1].songmid })
+        .then((res) => {
+          this.lyric = new Lyric(res.data.lyric);
+          this.currentLyricTitle = this.lyric.lines[0].txt;
+          console.log(this.lyric);
+        });
+      this.$http
+        .getComment({ id: this.playSongs[this.playIndexNum + 1].songid, bizType: 1 })
+        .then((res) => {
+          this.commentList2 = res.data.comment.commentlist;
+        });
+    },
   },
-  // watch:{
-  //   ind(n){
-  //     this.ind = n;
-  //     this.$refs.lyricLine.scrollTop = 30 * n;
-  //   }
-  // }
 };
 </script>
 <style lang="less">
